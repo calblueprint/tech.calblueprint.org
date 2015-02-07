@@ -6,6 +6,7 @@ var express     = require('express'),
     uuid        = require('node-uuid'),
     _           = require('lodash'),
     Promise     = require('bluebird'),
+    rollbar     = require('rollbar'),
 
     api         = require('./api'),
     config      = require('./config'),
@@ -132,6 +133,8 @@ function init(options) {
     // Get reference to an express app instance.
     var blogApp = express(),
         adminApp = express();
+    blogApp.use(rollbar.errorHandler(process.env.ROLLBAR_ACCESS_TOKEN));
+    adminApp.use(rollbar.errorHandler(process.env.ROLLBAR_ACCESS_TOKEN));
 
     // ### Initialisation
     // The server and its dependencies require a populated config

@@ -5,7 +5,8 @@
 var express,
     ghost,
     parentApp,
-    errors;
+    errors,
+    rollbar;
 
 // Make sure dependencies are installed and file system permissions are correct.
 require('./core/server/utils/startup-check').check();
@@ -14,6 +15,8 @@ require('./core/server/utils/startup-check').check();
 express = require('express');
 ghost = require('./core');
 errors = require('./core/server/errors');
+rollbar = require("rollbar");
+rollbar.init(process.env.ROLLBAR_ACCESS_TOKEN);
 
 // Create our parent express app instance.
 parentApp = express();
